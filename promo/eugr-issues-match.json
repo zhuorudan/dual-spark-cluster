@@ -1,0 +1,580 @@
+[
+ {
+  "num": 424,
+  "title": "Solo DGX Spark hard hangs when starting up qwen38-27b-nvfp4-regular-image from recipe",
+  "url": "https://github.com/eugr/spark-vllm-docker/issues/424",
+  "created": "2026-10-04",
+  "comments": 10,
+  "solution": "看门狗双机成对重建（watchdog）",
+  "detail": "单端重启导致 NCCL 失配死循环——dspark.sh watchdog 每2分钟判活，异常时自动 worker→head 成对重建，崩溃现场留档7天",
+  "labels": []
+ },
+ {
+  "num": 420,
+  "title": "Verifying Docker image consistency across cluster nodes",
+  "url": "https://github.com/eugr/spark-vllm-docker/issues/420",
+  "created": "2026-10-03",
+  "comments": 0,
+  "solution": "双机缓存一致性",
+  "detail": "dspark.sh cache 查双机大小/文件数/一致性，model-sync 走 200G fabric 双向 rsync（1.8GB/s）",
+  "labels": []
+ },
+ {
+  "num": 416,
+  "title": "Question: prefix-cache reuse with concurrent long-context GLM-5.3 hybrid-Mamba sessions",
+  "url": "https://github.com/eugr/spark-vllm-docker/issues/416",
+  "created": "2026-09-24",
+  "comments": 0,
+  "solution": "PMU128 前缀缓存实测",
+  "detail": "glm53 用 PMU128 前缀匹配粒度，866 prompt 命中 768，命中数在 usage.prompt_tokens_details.cached_tokens",
+  "labels": []
+ },
+ {
+  "num": 409,
+  "title": "glm-5.3-flash recipe (nightly-20260913, 2x GB10 TP=2): single chunked-prefill step at ~560",
+  "url": "https://github.com/eugr/spark-vllm-docker/issues/409",
+  "created": "2026-09-21",
+  "comments": 1,
+  "solution": "看门狗双机成对重建（watchdog）",
+  "detail": "单端重启导致 NCCL 失配死循环——dspark.sh watchdog 每2分钟判活，异常时自动 worker→head 成对重建，崩溃现场留档7天",
+  "labels": []
+ },
+ {
+  "num": 405,
+  "title": "How to increase max context len for qwen3.8 cluster?",
+  "url": "https://github.com/eugr/spark-vllm-docker/issues/405",
+  "created": "2026-09-17",
+  "comments": 2,
+  "solution": "1M 上下文配置",
+  "detail": "glm53 实测 1,048,576 上下文 + KV 池 192万 token（fp8），配法在 model-glm53.md",
+  "labels": []
+ },
+ {
+  "num": 404,
+  "title": "b12x: engine wedges in cudaStreamSynchronize (boundary checkpoint) after NV_ERR_NO_MEMORY ",
+  "url": "https://github.com/eugr/spark-vllm-docker/issues/404",
+  "created": "2026-09-17",
+  "comments": 1,
+  "solution": "看门狗双机成对重建（watchdog）",
+  "detail": "单端重启导致 NCCL 失配死循环——dspark.sh watchdog 每2分钟判活，异常时自动 worker→head 成对重建，崩溃现场留档7天",
+  "labels": []
+ },
+ {
+  "num": 402,
+  "title": "two sparks cluster with lmcache server, how to change the recipe vllm command???",
+  "url": "https://github.com/eugr/spark-vllm-docker/issues/402",
+  "created": "2026-09-16",
+  "comments": 0,
+  "solution": "看门狗双机成对重建（watchdog）",
+  "detail": "单端重启导致 NCCL 失配死循环——dspark.sh watchdog 每2分钟判活，异常时自动 worker→head 成对重建，崩溃现场留档7天",
+  "labels": []
+ },
+ {
+  "num": 396,
+  "title": "minimax-m2.7-awq recipe fails to start: KV cache 0.75 GiB short at default gpu_memory_util",
+  "url": "https://github.com/eugr/spark-vllm-docker/issues/396",
+  "created": "2026-09-14",
+  "comments": 0,
+  "solution": "看门狗双机成对重建（watchdog）",
+  "detail": "单端重启导致 NCCL 失配死循环——dspark.sh watchdog 每2分钟判活，异常时自动 worker→head 成对重建，崩溃现场留档7天",
+  "labels": []
+ },
+ {
+  "num": 391,
+  "title": "B12X DeepSeek-V4-Flash-Vision: runtime illegal memory access + Xid 31 in sparse-MLA prefil",
+  "url": "https://github.com/eugr/spark-vllm-docker/issues/391",
+  "created": "2026-09-13",
+  "comments": 0,
+  "solution": "PMU128 前缀缓存实测",
+  "detail": "glm53 用 PMU128 前缀匹配粒度，866 prompt 命中 768，命中数在 usage.prompt_tokens_details.cached_tokens",
+  "labels": []
+ },
+ {
+  "num": 389,
+  "title": "Vision-Exp recipe on a 2x GB10 (128 GB) pair, kernel 7.0.0-1019: NCCL memlock ENOMEM at in",
+  "url": "https://github.com/eugr/spark-vllm-docker/issues/389",
+  "created": "2026-09-12",
+  "comments": 3,
+  "solution": "看门狗双机成对重建（watchdog）",
+  "detail": "单端重启导致 NCCL 失配死循环——dspark.sh watchdog 每2分钟判活，异常时自动 worker→head 成对重建，崩溃现场留档7天",
+  "labels": []
+ },
+ {
+  "num": 388,
+  "title": "Qwen3.8 Flash Next NVFP4 solo recipe exhausts memory and may reboot DGX Spark",
+  "url": "https://github.com/eugr/spark-vllm-docker/issues/388",
+  "created": "2026-09-11",
+  "comments": 2,
+  "solution": "OOM 策略",
+  "detail": "warmup 峰值会触发 earlyoom 误杀，两机停用 earlyoom，留 16GB swap + 内核 OOM killer 兜底",
+  "labels": []
+ },
+ {
+  "num": 383,
+  "title": "hf-download.sh: no way to control --max-workers, defaults to 8 parallel connections which ",
+  "url": "https://github.com/eugr/spark-vllm-docker/issues/383",
+  "created": "2026-09-08",
+  "comments": 0,
+  "solution": "下载编排",
+  "detail": "dspark.sh download 双机分片并行+hf-mirror/代理双通道+HF_HUB_DISABLE_XET=1，自动 fabric rsync 合并",
+  "labels": []
+ },
+ {
+  "num": 372,
+  "title": "Request: Serve a locally stored model without contacting HuggingFace",
+  "url": "https://github.com/eugr/spark-vllm-docker/issues/372",
+  "created": "2026-08-31",
+  "comments": 7,
+  "solution": "下载编排",
+  "detail": "dspark.sh download 双机分片并行+hf-mirror/代理双通道+HF_HUB_DISABLE_XET=1，自动 fabric rsync 合并",
+  "labels": []
+ },
+ {
+  "num": 366,
+  "title": "Request: Offline / Airgapped process",
+  "url": "https://github.com/eugr/spark-vllm-docker/issues/366",
+  "created": "2026-08-30",
+  "comments": 2,
+  "solution": "统一网关+一键切换",
+  "detail": "dspark.sh use 一键切换（停旧→等内存→起新→健康门控），:8002 网关固定模型名 dspark，客户端零改动",
+  "labels": []
+ },
+ {
+  "num": 358,
+  "title": "DSpark spec-decode draft acceptance collapses to ~0 under sustained load (b12x nightly, De",
+  "url": "https://github.com/eugr/spark-vllm-docker/issues/358",
+  "created": "2026-08-24",
+  "comments": 3,
+  "solution": "Dify functions shim",
+  "detail": "shim.py 双向翻译 legacy functions↔tool_calls，Dify 构建模式 Agent 全模型可用工具",
+  "labels": []
+ },
+ {
+  "num": 352,
+  "title": "B12X: inference hangs in block_fp8_linear_mxfp8_fused (attention input projections, multi-",
+  "url": "https://github.com/eugr/spark-vllm-docker/issues/352",
+  "created": "2026-08-20",
+  "comments": 6,
+  "solution": "看门狗双机成对重建（watchdog）",
+  "detail": "单端重启导致 NCCL 失配死循环——dspark.sh watchdog 每2分钟判活，异常时自动 worker→head 成对重建，崩溃现场留档7天",
+  "labels": []
+ },
+ {
+  "num": 349,
+  "title": "DeepSeek V4 Flash fails during CUDA graph profiling with B12X FP8 GEMM illegal address aft",
+  "url": "https://github.com/eugr/spark-vllm-docker/issues/349",
+  "created": "2026-08-15",
+  "comments": 9,
+  "solution": "看门狗双机成对重建（watchdog）",
+  "detail": "单端重启导致 NCCL 失配死循环——dspark.sh watchdog 每2分钟判活，异常时自动 worker→head 成对重建，崩溃现场留档7天",
+  "labels": []
+ },
+ {
+  "num": 348,
+  "title": "deepseek-v4-flash-0731 * EngineCore encountered a fatal error",
+  "url": "https://github.com/eugr/spark-vllm-docker/issues/348",
+  "created": "2026-08-15",
+  "comments": 1,
+  "solution": "看门狗双机成对重建（watchdog）",
+  "detail": "单端重启导致 NCCL 失配死循环——dspark.sh watchdog 每2分钟判活，异常时自动 worker→head 成对重建，崩溃现场留档7天",
+  "labels": []
+ },
+ {
+  "num": 346,
+  "title": "For new recipes with the B12X",
+  "url": "https://github.com/eugr/spark-vllm-docker/issues/346",
+  "created": "2026-08-11",
+  "comments": 1,
+  "solution": "看门狗双机成对重建（watchdog）",
+  "detail": "单端重启导致 NCCL 失配死循环——dspark.sh watchdog 每2分钟判活，异常时自动 worker→head 成对重建，崩溃现场留档7天",
+  "labels": []
+ },
+ {
+  "num": 345,
+  "title": "Consider publishing a prebuilt MXFP4 image (vllm-node-mxfp4)",
+  "url": "https://github.com/eugr/spark-vllm-docker/issues/345",
+  "created": "2026-08-10",
+  "comments": 0,
+  "solution": "并发阶梯压测方法",
+  "detail": "标准压测脚本：并发1/2/3/4/6/8 阶梯，测出 max-num-seqs=6 是吞吐饱和点（65-68 tok/s）",
+  "labels": []
+ },
+ {
+  "num": 343,
+  "title": "gemma4-26b-a4b-nvfp4: num_speculative_tokens=2 outperforms the default of 4",
+  "url": "https://github.com/eugr/spark-vllm-docker/issues/343",
+  "created": "2026-08-10",
+  "comments": 3,
+  "solution": "看门狗双机成对重建（watchdog）",
+  "detail": "单端重启导致 NCCL 失配死循环——dspark.sh watchdog 每2分钟判活，异常时自动 worker→head 成对重建，崩溃现场留档7天",
+  "labels": []
+ },
+ {
+  "num": 342,
+  "title": "Docker compose for portainer",
+  "url": "https://github.com/eugr/spark-vllm-docker/issues/342",
+  "created": "2026-08-10",
+  "comments": 0,
+  "solution": "看门狗双机成对重建（watchdog）",
+  "detail": "单端重启导致 NCCL 失配死循环——dspark.sh watchdog 每2分钟判活，异常时自动 worker→head 成对重建，崩溃现场留档7天",
+  "labels": []
+ },
+ {
+  "num": 337,
+  "title": "Inkling Small: <|end_message|> leaks at end of every message",
+  "url": "https://github.com/eugr/spark-vllm-docker/issues/337",
+  "created": "2026-08-04",
+  "comments": 1,
+  "solution": "Dify functions shim",
+  "detail": "shim.py 双向翻译 legacy functions↔tool_calls，Dify 构建模式 Agent 全模型可用工具",
+  "labels": []
+ },
+ {
+  "num": 336,
+  "title": "deepseek-v4-flash: GPU OOM loading MTP drafter on 2× DGX Spark (container, Ray and memory ",
+  "url": "https://github.com/eugr/spark-vllm-docker/issues/336",
+  "created": "2026-08-03",
+  "comments": 2,
+  "solution": "双机缓存一致性",
+  "detail": "dspark.sh cache 查双机大小/文件数/一致性，model-sync 走 200G fabric 双向 rsync（1.8GB/s）",
+  "labels": []
+ },
+ {
+  "num": 327,
+  "title": "Docker image mismatch error",
+  "url": "https://github.com/eugr/spark-vllm-docker/issues/327",
+  "created": "2026-07-29",
+  "comments": 5,
+  "solution": "看门狗双机成对重建（watchdog）",
+  "detail": "单端重启导致 NCCL 失配死循环——dspark.sh watchdog 每2分钟判活，异常时自动 worker→head 成对重建，崩溃现场留档7天",
+  "labels": []
+ },
+ {
+  "num": 288,
+  "title": "Step-3.7-Flash-NVFP4 erratic output after 2026052903",
+  "url": "https://github.com/eugr/spark-vllm-docker/issues/288",
+  "created": "2026-06-12",
+  "comments": 4,
+  "solution": "双机缓存一致性",
+  "detail": "dspark.sh cache 查双机大小/文件数/一致性，model-sync 走 200G fabric 双向 rsync（1.8GB/s）",
+  "labels": []
+ },
+ {
+  "num": 284,
+  "title": "Step 3.7 Flash Recipe Broken",
+  "url": "https://github.com/eugr/spark-vllm-docker/issues/284",
+  "created": "2026-06-11",
+  "comments": 1,
+  "solution": "看门狗双机成对重建（watchdog）",
+  "detail": "单端重启导致 NCCL 失配死循环——dspark.sh watchdog 每2分钟判活，异常时自动 worker→head 成对重建，崩溃现场留档7天",
+  "labels": []
+ },
+ {
+  "num": 280,
+  "title": "Support for --data-parallel-size 2 --enable-expert-parallel",
+  "url": "https://github.com/eugr/spark-vllm-docker/issues/280",
+  "created": "2026-06-07",
+  "comments": 0,
+  "solution": "并发阶梯压测方法",
+  "detail": "标准压测脚本：并发1/2/3/4/6/8 阶梯，测出 max-num-seqs=6 是吞吐饱和点（65-68 tok/s）",
+  "labels": []
+ },
+ {
+  "num": 277,
+  "title": "Add DeepSeek V4 Flash Recipe",
+  "url": "https://github.com/eugr/spark-vllm-docker/issues/277",
+  "created": "2026-06-05",
+  "comments": 1,
+  "solution": "1M 上下文配置",
+  "detail": "glm53 实测 1,048,576 上下文 + KV 池 192万 token（fp8），配法在 model-glm53.md",
+  "labels": []
+ },
+ {
+  "num": 275,
+  "title": "Deterministic SafetensorError at shard 17/41 loading Intel/Qwen3.5-397B-A17B-int4-AutoRoun",
+  "url": "https://github.com/eugr/spark-vllm-docker/issues/275",
+  "created": "2026-06-03",
+  "comments": 0,
+  "solution": "双机缓存一致性",
+  "detail": "dspark.sh cache 查双机大小/文件数/一致性，model-sync 走 200G fabric 双向 rsync（1.8GB/s）",
+  "labels": []
+ },
+ {
+  "num": 267,
+  "title": "RuntimeError: Engine core initialization failed. See root cause above. Failed core proc(s)",
+  "url": "https://github.com/eugr/spark-vllm-docker/issues/267",
+  "created": "2026-05-30",
+  "comments": 0,
+  "solution": "下载编排",
+  "detail": "dspark.sh download 双机分片并行+hf-mirror/代理双通道+HF_HUB_DISABLE_XET=1，自动 fabric rsync 合并",
+  "labels": []
+ },
+ {
+  "num": 260,
+  "title": "Kimi-K2.6-NVFP4 init hang on 8x DGX Spark (GB10): GPU spin-loop after model loading, all c",
+  "url": "https://github.com/eugr/spark-vllm-docker/issues/260",
+  "created": "2026-05-25",
+  "comments": 5,
+  "solution": "看门狗双机成对重建（watchdog）",
+  "detail": "单端重启导致 NCCL 失配死循环——dspark.sh watchdog 每2分钟判活，异常时自动 worker→head 成对重建，崩溃现场留档7天",
+  "labels": []
+ },
+ {
+  "num": 257,
+  "title": "run-recipe.sh / launch-cluster.sh restart-on-failure leaves cluster in orphaned non-servin",
+  "url": "https://github.com/eugr/spark-vllm-docker/issues/257",
+  "created": "2026-05-20",
+  "comments": 2,
+  "solution": "看门狗双机成对重建（watchdog）",
+  "detail": "单端重启导致 NCCL 失配死循环——dspark.sh watchdog 每2分钟判活，异常时自动 worker→head 成对重建，崩溃现场留档7天",
+  "labels": []
+ },
+ {
+  "num": 252,
+  "title": "3-node ring vLLM serve fails at pyNCCL sentinel all-reduce on canonical eugr cabling (NCCL",
+  "url": "https://github.com/eugr/spark-vllm-docker/issues/252",
+  "created": "2026-05-18",
+  "comments": 4,
+  "solution": "看门狗双机成对重建（watchdog）",
+  "detail": "单端重启导致 NCCL 失配死循环——dspark.sh watchdog 每2分钟判活，异常时自动 worker→head 成对重建，崩溃现场留档7天",
+  "labels": []
+ },
+ {
+  "num": 247,
+  "title": "Allow users to more easily use local models that are already downloaded",
+  "url": "https://github.com/eugr/spark-vllm-docker/issues/247",
+  "created": "2026-05-16",
+  "comments": 2,
+  "solution": "下载编排",
+  "detail": "dspark.sh download 双机分片并行+hf-mirror/代理双通道+HF_HUB_DISABLE_XET=1，自动 fabric rsync 合并",
+  "labels": []
+ },
+ {
+  "num": 246,
+  "title": "NCCL issue",
+  "url": "https://github.com/eugr/spark-vllm-docker/issues/246",
+  "created": "2026-05-16",
+  "comments": 0,
+  "solution": "看门狗双机成对重建（watchdog）",
+  "detail": "单端重启导致 NCCL 失配死循环——dspark.sh watchdog 每2分钟判活，异常时自动 worker→head 成对重建，崩溃现场留档7天",
+  "labels": []
+ },
+ {
+  "num": 240,
+  "title": "Request: move dual Spark recipes to 2x-spark-cluster/",
+  "url": "https://github.com/eugr/spark-vllm-docker/issues/240",
+  "created": "2026-05-12",
+  "comments": 3,
+  "solution": "看门狗双机成对重建（watchdog）",
+  "detail": "单端重启导致 NCCL 失配死循环——dspark.sh watchdog 每2分钟判活，异常时自动 worker→head 成对重建，崩溃现场留档7天",
+  "labels": []
+ },
+ {
+  "num": 227,
+  "title": "launch-cluster.sh should pin Ray --node-ip-address to $LOCAL_IP on multi-NIC hosts",
+  "url": "https://github.com/eugr/spark-vllm-docker/issues/227",
+  "created": "2026-05-02",
+  "comments": 2,
+  "solution": "看门狗双机成对重建（watchdog）",
+  "detail": "单端重启导致 NCCL 失配死循环——dspark.sh watchdog 每2分钟判活，异常时自动 worker→head 成对重建，崩溃现场留档7天",
+  "labels": []
+ },
+ {
+  "num": 226,
+  "title": "Can anyone confirm a GLM-4.7 quant working well using spark-vllm-docker?",
+  "url": "https://github.com/eugr/spark-vllm-docker/issues/226",
+  "created": "2026-05-01",
+  "comments": 3,
+  "solution": "Dify functions shim",
+  "detail": "shim.py 双向翻译 legacy functions↔tool_calls，Dify 构建模式 Agent 全模型可用工具",
+  "labels": []
+ },
+ {
+  "num": 225,
+  "title": "Can something be done about high CPU usage when the cluster is idle?",
+  "url": "https://github.com/eugr/spark-vllm-docker/issues/225",
+  "created": "2026-05-01",
+  "comments": 3,
+  "solution": "双机缓存一致性",
+  "detail": "dspark.sh cache 查双机大小/文件数/一致性，model-sync 走 200G fabric 双向 rsync（1.8GB/s）",
+  "labels": []
+ },
+ {
+  "num": 218,
+  "title": "Qwen3.6 support",
+  "url": "https://github.com/eugr/spark-vllm-docker/issues/218",
+  "created": "2026-04-29",
+  "comments": 2,
+  "solution": "看门狗双机成对重建（watchdog）",
+  "detail": "单端重启导致 NCCL 失配死循环——dspark.sh watchdog 每2分钟判活，异常时自动 worker→head 成对重建，崩溃现场留档7天",
+  "labels": []
+ },
+ {
+  "num": 215,
+  "title": "Sending image is hanging vllm with Mistral-Small-4-119B-2603-NVFP4",
+  "url": "https://github.com/eugr/spark-vllm-docker/issues/215",
+  "created": "2026-04-27",
+  "comments": 0,
+  "solution": "看门狗双机成对重建（watchdog）",
+  "detail": "单端重启导致 NCCL 失配死循环——dspark.sh watchdog 每2分钟判活，异常时自动 worker→head 成对重建，崩溃现场留档7天",
+  "labels": []
+ },
+ {
+  "num": 196,
+  "title": "nemotron 3 super tool call leak",
+  "url": "https://github.com/eugr/spark-vllm-docker/issues/196",
+  "created": "2026-04-18",
+  "comments": 4,
+  "solution": "Dify functions shim",
+  "detail": "shim.py 双向翻译 legacy functions↔tool_calls，Dify 构建模式 Agent 全模型可用工具",
+  "labels": []
+ },
+ {
+  "num": 194,
+  "title": "MTP + async_scheduling: async_copy_ready_event race on persistent connections (DGX Spark/S",
+  "url": "https://github.com/eugr/spark-vllm-docker/issues/194",
+  "created": "2026-04-17",
+  "comments": 7,
+  "solution": "双机缓存一致性",
+  "detail": "dspark.sh cache 查双机大小/文件数/一致性，model-sync 走 200G fabric 双向 rsync（1.8GB/s）",
+  "labels": []
+ },
+ {
+  "num": 193,
+  "title": "Inquiry regarding Avg generation throughput improvement",
+  "url": "https://github.com/eugr/spark-vllm-docker/issues/193",
+  "created": "2026-04-17",
+  "comments": 2,
+  "solution": "并发阶梯压测方法",
+  "detail": "标准压测脚本：并发1/2/3/4/6/8 阶梯，测出 max-num-seqs=6 是吞吐饱和点（65-68 tok/s）",
+  "labels": []
+ },
+ {
+  "num": 185,
+  "title": "support modelscope",
+  "url": "https://github.com/eugr/spark-vllm-docker/issues/185",
+  "created": "2026-04-13",
+  "comments": 0,
+  "solution": "Dify functions shim",
+  "detail": "shim.py 双向翻译 legacy functions↔tool_calls，Dify 构建模式 Agent 全模型可用工具",
+  "labels": []
+ },
+ {
+  "num": 180,
+  "title": "Mistral Small 4 119B NVFP4 crashes on generation due to TRITON_MLA shape mismatch (Missing",
+  "url": "https://github.com/eugr/spark-vllm-docker/issues/180",
+  "created": "2026-04-12",
+  "comments": 1,
+  "solution": "看门狗双机成对重建（watchdog）",
+  "detail": "单端重启导致 NCCL 失配死循环——dspark.sh watchdog 每2分钟判活，异常时自动 worker→head 成对重建，崩溃现场留档7天",
+  "labels": []
+ },
+ {
+  "num": 140,
+  "title": "Add Support: minimax-m2.5-REAP",
+  "url": "https://github.com/eugr/spark-vllm-docker/issues/140",
+  "created": "2026-03-26",
+  "comments": 3,
+  "solution": "下载编排",
+  "detail": "dspark.sh download 双机分片并行+hf-mirror/代理双通道+HF_HUB_DISABLE_XET=1，自动 fabric rsync 合并",
+  "labels": []
+ },
+ {
+  "num": 138,
+  "title": "Advice (or recipe ;) for tuning nvidia/Nemotron-Cascade-2-30B-A3B ?",
+  "url": "https://github.com/eugr/spark-vllm-docker/issues/138",
+  "created": "2026-03-26",
+  "comments": 9,
+  "solution": "并发阶梯压测方法",
+  "detail": "标准压测脚本：并发1/2/3/4/6/8 阶梯，测出 max-num-seqs=6 是吞吐饱和点（65-68 tok/s）",
+  "labels": []
+ },
+ {
+  "num": 115,
+  "title": "Qwen3-Coder-Next randomly looping gibberish",
+  "url": "https://github.com/eugr/spark-vllm-docker/issues/115",
+  "created": "2026-03-20",
+  "comments": 13,
+  "solution": "统一网关+一键切换",
+  "detail": "dspark.sh use 一键切换（停旧→等内存→起新→健康门控），:8002 网关固定模型名 dspark，客户端零改动",
+  "labels": []
+ },
+ {
+  "num": 114,
+  "title": "Qwen3.5-397B-A17B-int4-AutoRound on 2x DGX Spark stalls after model load unless prefix cac",
+  "url": "https://github.com/eugr/spark-vllm-docker/issues/114",
+  "created": "2026-03-19",
+  "comments": 7,
+  "solution": "下载编排",
+  "detail": "dspark.sh download 双机分片并行+hf-mirror/代理双通道+HF_HUB_DISABLE_XET=1，自动 fabric rsync 合并",
+  "labels": []
+ },
+ {
+  "num": 112,
+  "title": "vLLM Prebuilt vLLM Wheels (0.17.2rc1.dev7): Performance regression in short prompt prefill",
+  "url": "https://github.com/eugr/spark-vllm-docker/issues/112",
+  "created": "2026-03-19",
+  "comments": 4,
+  "solution": "看门狗双机成对重建（watchdog）",
+  "detail": "单端重启导致 NCCL 失配死循环——dspark.sh watchdog 每2分钟判活，异常时自动 worker→head 成对重建，崩溃现场留档7天",
+  "labels": []
+ },
+ {
+  "num": 52,
+  "title": "Question: OOM during cuda graph on medium sized models",
+  "url": "https://github.com/eugr/spark-vllm-docker/issues/52",
+  "created": "2026-02-18",
+  "comments": 10,
+  "solution": "并发阶梯压测方法",
+  "detail": "标准压测脚本：并发1/2/3/4/6/8 阶梯，测出 max-num-seqs=6 是吞吐饱和点（65-68 tok/s）",
+  "labels": [
+   "question"
+  ]
+ },
+ {
+  "num": 49,
+  "title": "Minor YAML optimization for recipes",
+  "url": "https://github.com/eugr/spark-vllm-docker/issues/49",
+  "created": "2026-02-16",
+  "comments": 0,
+  "solution": "看门狗双机成对重建（watchdog）",
+  "detail": "单端重启导致 NCCL 失配死循环——dspark.sh watchdog 每2分钟判活，异常时自动 worker→head 成对重建，崩溃现场留档7天",
+  "labels": [
+   "enhancement"
+  ]
+ },
+ {
+  "num": 43,
+  "title": "Memory leak with GLM-4.7 Flash",
+  "url": "https://github.com/eugr/spark-vllm-docker/issues/43",
+  "created": "2026-02-13",
+  "comments": 9,
+  "solution": "1M 上下文配置",
+  "detail": "glm53 实测 1,048,576 上下文 + KV 池 192万 token（fp8），配法在 model-glm53.md",
+  "labels": []
+ },
+ {
+  "num": 40,
+  "title": "Detected IB__F Pulling in all Ports instead of Spark Clustered Port",
+  "url": "https://github.com/eugr/spark-vllm-docker/issues/40",
+  "created": "2026-02-11",
+  "comments": 4,
+  "solution": "下载编排",
+  "detail": "dspark.sh download 双机分片并行+hf-mirror/代理双通道+HF_HUB_DISABLE_XET=1，自动 fabric rsync 合并",
+  "labels": [
+   "enhancement"
+  ]
+ },
+ {
+  "num": 7,
+  "title": "Added notes for running the different models on this image",
+  "url": "https://github.com/eugr/spark-vllm-docker/issues/7",
+  "created": "2025-12-31",
+  "comments": 1,
+  "solution": "看门狗双机成对重建（watchdog）",
+  "detail": "单端重启导致 NCCL 失配死循环——dspark.sh watchdog 每2分钟判活，异常时自动 worker→head 成对重建，崩溃现场留档7天",
+  "labels": [
+   "documentation"
+  ]
+ }
+]
